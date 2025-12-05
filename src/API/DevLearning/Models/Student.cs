@@ -1,4 +1,4 @@
-﻿using Blog.DevLearning.Models;
+﻿using DevLearning.Models;
 
 namespace DevLearning.Models
 {
