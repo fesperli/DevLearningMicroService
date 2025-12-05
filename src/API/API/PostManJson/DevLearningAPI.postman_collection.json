@@ -1,0 +1,706 @@
+{
+	"info": {
+		"_postman_id": "e4203da1-309e-4d22-b35a-fa5c89594921",
+		"name": "DevLearningAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45753717",
+		"_collection_link": "https://devlearnigapi.postman.co/workspace/DevLearnigAPI-Workspace~ec78ae5f-9a27-424e-84ab-3fb7c05df507/collection/45753717-e4203da1-309e-4d22-b35a-fa5c89594921?action=share&source=collection_link&creator=45753717"
+	},
+	"item": [
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "GetAllCategoriesAsync",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7003/Category",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCategoryByIdAsync",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7003/Category/f62785c8-7da9-4f80-b178-ed09d2f6b8d9",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Category",
+								"f62785c8-7da9-4f80-b178-ed09d2f6b8d9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateCategoryAsync",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Title\": \"Desenvolvimento BackEnd\",\r\n    \"Url\": \"https://umUrl\",\r\n    \"Summary\": \"a, b, c, d, e, f\",\r\n    \"Order\": 2,\r\n    \"Description\": \"Um curso ai\",\r\n    \"Featured\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7003/Category",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCategoryAsync",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Title\": \"Desenvolvimento BackEnd\",\r\n    \"Url\": \"https://umUrl\",\r\n    \"Summary\": \"d, e, g\",\r\n    \"Order\": 1,\r\n    \"Description\": \"t ai\",\r\n    \"Featured\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7003/Category/74f35355-c27f-4416-abca-f1d6b8d7993a",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Category",
+								"74f35355-c27f-4416-abca-f1d6b8d7993a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCategoryAsync",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"pips\"\r\n}"
+						},
+						"url": {
+							"raw": "https://localhost:7003/Category/74f35355-c27f-4416-abca-f1d6b8d7993a",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Category",
+								"74f35355-c27f-4416-abca-f1d6b8d7993a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Author",
+			"item": [
+				{
+					"name": "GetAllAuthorsAsync",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7003/Author",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Author"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAuthorByIdAsync",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7003/Author/b49f80e2-94f0-4400-95d8-9c3ef48e1f82",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Author",
+								"b49f80e2-94f0-4400-95d8-9c3ef48e1f82"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateAuthorAsync",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Authorbrabo\",\r\n    \"Title\": \"o author2\",\r\n    \"Image\": \"a, b, c\",\r\n    \"Bio\": \"uma bio\",\r\n    \"Url\": \"https://umUrl\",\r\n    \"Email\": \"um@email\",\r\n    \"Type\": true \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7003/Author",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Author"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateAuthorAsync",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Sewloco mto author\",\r\n    \"Title\": \"o author222222222\",\r\n    \"Image\": \"a, b, c, d\",\r\n    \"Bio\": \"uma bio\",\r\n    \"Url\": \"https://umUrl\",\r\n    \"Email\": \"um@email\",\r\n    \"Type\": false \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7003/Author/b0094b1c-57ff-4cf8-8583-91927b04e85e",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Author",
+								"b0094b1c-57ff-4cf8-8583-91927b04e85e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteAuthorAsync",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"pips\"\r\n}"
+						},
+						"url": {
+							"raw": "https://localhost:7003/Author/b0094b1c-57ff-4cf8-8583-91927b04e85e",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Author",
+								"b0094b1c-57ff-4cf8-8583-91927b04e85e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Career",
+			"item": [
+				{
+					"name": "GetAllCareer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7003/api/career",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"api",
+								"career"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCareerById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateCareer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Formação Backend .NET\",\r\n  \"summary\": \"Trilha completa para aprender desenvolvimento backend com .NET.\",\r\n  \"url\": \"formacao-backend-dotnet\",\r\n  \"active\": true,\r\n  \"featured\": true,\r\n  \"tags\": \"c#, sql, backend\",\r\n  \"items\": [\r\n    {\r\n      \"courseId\": \"c82b8753-c5b9-489a-9c74-7fe085b2f260\",\r\n      \"title\": \"Introdução ao C#\",\r\n      \"description\": \"Curso de fundamentos da linguagem C#.\",\r\n      \"order\": 1\r\n    },\r\n    {\r\n      \"courseId\": \"aab4caa8-e7a9-44e7-ac56-cc19e4868c56\",\r\n      \"title\": \"SQL Server Completo\",\r\n      \"description\": \"Curso completo sobre SQL Server e modelagem de dados.\",\r\n      \"order\": 2\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7003/api/career",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"api",
+								"career"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCareer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Formação Backend .NET - Atualizada\",\r\n  \"summary\": \"Conteúdo atualizado e reorganizado.\",\r\n  \"items\": [\r\n    {\r\n      \"courseId\": \"0c578704-e9b1-4e23-bd88-0e53a4c6f8d9\",\r\n      \"title\": \"C# para Iniciantes\",\r\n      \"description\": \"Curso básico de C#, atualizado.\",\r\n      \"order\": 1\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7003/api/career/4e3adbde-a108-433e-93be-0cf5e0e5c90f",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"api",
+								"career",
+								"4e3adbde-a108-433e-93be-0cf5e0e5c90f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Students",
+			"item": [
+				{
+					"name": "CreateStudent",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Marina Joyce\",\r\n    \"Email\": \"marinajoyce@yahoo.com\",\r\n    \"Document\": \"54912305402\",\r\n    \"Phone\": \"61997438401\",\r\n    \"Birthdate\": \"1983-10-13\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7003/Student/",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Student",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllStudents",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"José Hebert\",\r\n    \"Email\": \"josehebert@outlook.com\",\r\n    \"Document\": \"75802124586\",\r\n    \"Phone\": \"51997854301\",\r\n    \"Birthdate\": \"2001-07-01\"\r\n}"
+						},
+						"url": {
+							"raw": "https://localhost:7003/Student/",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Student",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetStudentById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7003/Student/20085b15-e3c6-4cff-88dd-68490c6244e3",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Student",
+								"20085b15-e3c6-4cff-88dd-68490c6244e3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateStudent",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Rodrigo Alves Junior\",\r\n    \"Email\": \"\",\r\n    \"Phone\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7003/Student/20085b15-e3c6-4cff-88dd-68490c6244e3",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Student",
+								"20085b15-e3c6-4cff-88dd-68490c6244e3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteStudent",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"José Hebert\",\r\n    \"Email\": \"josehebert@outlook.com\",\r\n    \"Document\": \"75802124586\",\r\n    \"Phone\": \"51997854301\",\r\n    \"Birthdate\": \"2001-07-01\"\r\n}"
+						},
+						"url": {
+							"raw": "https://localhost:7003/Student/20085b15-e3c6-4cff-88dd-68490c6244e3",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Student",
+								"20085b15-e3c6-4cff-88dd-68490c6244e3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetStudentCourses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7003/Student/20085b15-e3c6-4cff-88dd-68490c6244e3/Courses",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Student",
+								"20085b15-e3c6-4cff-88dd-68490c6244e3",
+								"Courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EnrollingStudentInCourse",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Progress\": 20,\r\n    \"Favorite\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7003/Student/43856ee7-2fb2-46f7-9e88-d054d93e6cd4/Course/8A577C3C-C8D7-4364-B0FC-F30FCFE987CC",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Student",
+								"43856ee7-2fb2-46f7-9e88-d054d93e6cd4",
+								"Course",
+								"8A577C3C-C8D7-4364-B0FC-F30FCFE987CC"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateProgressStudentCourse",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Progress\": 20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7003/Student/20085b15-e3c6-4cff-88dd-68490c6244e3/Course/f84dc231-b9d7-4980-9a4a-88a0f18d964b/Progress",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7003",
+							"path": [
+								"Student",
+								"20085b15-e3c6-4cff-88dd-68490c6244e3",
+								"Course",
+								"f84dc231-b9d7-4980-9a4a-88a0f18d964b",
+								"Progress"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Course",
+			"item": [
+				{
+					"name": "GetCourse",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5280/api/Course",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5280",
+							"path": [
+								"api",
+								"Course"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCourseById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5280/api/Course/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5280",
+							"path": [
+								"api",
+								"Course",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateCourse",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Tag\": \"csharp-basics\",\r\n  \"Title\": \"Introdução ao C#\",\r\n  \"Summary\": \"Curso básico de C# para iniciantes.\",\r\n  \"Url\": \"introducao-ao-csharp\",\r\n  \"Level\": 1,\r\n  \"DurationInMinutes\": 120,\r\n  \"CreateDate\": \"2025-12-01T10:40:00\",\r\n  \"LastUpdateDate\": \"2025-12-10T10:45:00\",\r\n  \"Active\": true,\r\n  \"Free\": false,\r\n  \"Featured\": true,\r\n\"authorId\": \"b49f80e2-94f0-4400-95d8-9c3ef48e1f82\",\r\n  \"categoryId\": \"f62785c8-7da9-4f80-b178-ed09d2f6b8d9\",\r\n  \"Tags\": \"salva\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5280/api/Course",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5280",
+							"path": [
+								"api",
+								"Course"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCourse",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5280/api/Course/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5280",
+							"path": [
+								"api",
+								"Course",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCourse",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5280/api/Course/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5280",
+							"path": [
+								"api",
+								"Course",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
