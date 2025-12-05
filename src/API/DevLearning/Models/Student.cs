@@ -1,6 +1,6 @@
-﻿using Blog.API.Models;
+﻿using Blog.DevLearning.Models;
 
-namespace API.Models
+namespace DevLearning.Models
 {
     public class Student
     {

@@ -1,4 +1,4 @@
-﻿namespace API.Models.DTOs.StudentCourse
+﻿namespace DevLearning.Models.DTOs.StudentCourse
 {
     public class StudentCourseRequestDTO
     {

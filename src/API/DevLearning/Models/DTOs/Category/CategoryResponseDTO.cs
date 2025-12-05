@@ -1,4 +1,4 @@
-﻿namespace API.Models.DTOs.Category
+﻿namespace DevLearning.Models.DTOs.Category
 {
     public class CategoryResponseDTO
     {

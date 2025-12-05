@@ -1,7 +1,7 @@
-﻿using API.Models.DTOs.Career;
+﻿using DevLearning.Models.DTOs.Career;
 using System.Text.Json.Serialization;
 
-namespace API.Models
+namespace DevLearning.Models
 {
     public class Career
     {
