@@ -1,18 +1,11 @@
-﻿namespace API.Models
+﻿namespace DevLearning.Models
 {
     public class CareerItem
     {
-        public Guid CareerId { get; private set; }
-        public Guid CourseId { get; private set; }
-        public string Title { get; private set; }
-        public string? Description { get; private set; }
-        public int Order { get; private set; }
-
-        public CareerItem(Guid careerId, Guid courseId, int order)
-        {
-            CareerId = careerId;
-            CourseId = courseId;
-            Order = order;
-        }
+        public int CourseId { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public int Order { get; set; }
+        public int Duration { get; set; }
     }
 }

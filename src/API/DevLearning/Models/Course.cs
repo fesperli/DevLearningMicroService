@@ -1,4 +1,4 @@
-﻿namespace Blog.API.Models
+﻿namespace Blog.DevLearning.Models
 {
     public class Course
     {

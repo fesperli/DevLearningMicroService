@@ -1,12 +1,12 @@
-﻿namespace API.Models.DTOs.Career
+﻿namespace DevLearning.Models.DTOs.Career
 {
     public class CareerItemRequestDTO
     {
-        public Guid CourseId { get; set; }  
+        public int CourseId { get; init; }  
 
         public string Title { get; init; } = string.Empty;
         public string? Description { get; init; } = string.Empty;
-        public int Order { get; set; }
+        public int Order { get; init; }
 
     }
 }
