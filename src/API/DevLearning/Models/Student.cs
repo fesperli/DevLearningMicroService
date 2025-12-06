@@ -1,9 +1,13 @@
 ﻿using Blog.DevLearning.Models;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace DevLearning.Models
 {
     public class Student
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public Guid Id { get; private set; }
         public string Name { get; private set; }
         public string Email { get; private set; }
