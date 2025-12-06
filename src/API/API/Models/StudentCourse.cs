@@ -1,4 +1,4 @@
-﻿namespace API.Models
+﻿namespace DevLearning.Models
 {
     public class StudentCourse
     {
