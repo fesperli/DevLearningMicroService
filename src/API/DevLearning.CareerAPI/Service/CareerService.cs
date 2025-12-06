@@ -11,10 +11,8 @@ namespace DevLearning.Services
 {
     public class CareerService : ICareerService
     {
-        // Usamos a Interface, não a classe concreta (Boas práticas)
         private readonly ICareerRepository _repository;
 
-        // Removemos o CourseRepository pois ele é do SQL e estamos isolados no Mongo
         public CareerService(ICareerRepository repository)
         {
             _repository = repository;
@@ -23,8 +21,6 @@ namespace DevLearning.Services
         public async Task<IEnumerable<CareerResponseDTO>> GetAllCareerAsync()
         {
             var careers = await _repository.GetAllCareerAsync();
-
-            // Mapeia a lista de Entidades para a lista de DTOs de resposta
             return careers.Select(MapToResponse);
         }
 
@@ -40,11 +36,9 @@ namespace DevLearning.Services
 
         public async Task<Guid> CreateCareerAsync(CareerRequestDTO careerDto)
         {
-            // Validações Básicas
             if (careerDto == null) throw new ArgumentException("Dados inválidos.");
             if (string.IsNullOrWhiteSpace(careerDto.Title)) throw new ArgumentException("O título é obrigatório.");
 
-            // 1. Prepara a lista de Itens (Antiga tabela de relacionamento)
             var careerItems = new List<CareerItem>();
             int totalDuration = 0;
 
@@ -52,16 +46,12 @@ namespace DevLearning.Services
             {
                 foreach (var itemDto in careerDto.Items)
                 {
-                    // --- LÓGICA DE TESTE STANDALONE ---
-                    // Como não temos o CourseRepository aqui, assumimos 60 min ou pegamos do DTO se existisse.
-                    // Num cenário real futuro, aqui entraria o HttpClient.
                     int duracaoMock = 60;
                     totalDuration += duracaoMock;
 
                     careerItems.Add(new CareerItem
                     {
                         CourseId = itemDto.CourseId,
-                        // Se não vier título no DTO, criamos um genérico para não quebrar
                         Title = string.IsNullOrWhiteSpace(itemDto.Title) ? $"Curso {itemDto.CourseId}" : itemDto.Title,
                         Description = itemDto.Description,
                         Order = itemDto.Order,
@@ -70,10 +60,8 @@ namespace DevLearning.Services
                 }
             }
 
-            // 2. Cria a Entidade de Domínio (Career)
-            // O Mongo vai salvar esse objeto inteiro de uma vez
             var newCareer = new Career(
-                Guid.NewGuid(), // Geramos o ID novo
+                Guid.NewGuid(),
                 careerDto.Title,
                 careerDto.Summary,
                 careerDto.Url,
@@ -81,10 +69,9 @@ namespace DevLearning.Services
                 careerDto.Active,
                 careerDto.Featured,
                 careerDto.Tags,
-                careerItems // Passamos a lista processada
+                careerItems 
             );
 
-            // 3. Chama o repositório Mongo
             return await _repository.CreateCareerAsync(newCareer);
         }
 
@@ -94,11 +81,9 @@ namespace DevLearning.Services
             if (careerDto == null) throw new ArgumentException("Dados inválidos.");
             if (string.IsNullOrWhiteSpace(careerDto.Title)) throw new ArgumentException("O título é obrigatório.");
 
-            // Busca a carreira existente no Mongo
             var existingCareer = await _repository.GetCareerByIdAsync(id);
             if (existingCareer == null) return false;
 
-            // Recalcula os itens (Mesma lógica do Create)
             var careerItems = new List<CareerItem>();
             int totalDuration = 0;
 
@@ -119,9 +104,6 @@ namespace DevLearning.Services
                     });
                 }
             }
-
-            // Atualiza os dados da entidade existente na memória
-            // (Assumindo que você tem métodos de Update ou Setters na sua classe Career)
             existingCareer.Update(
                 careerDto.Title,
                 careerDto.Summary,
@@ -130,16 +112,12 @@ namespace DevLearning.Services
                 careerDto.Featured,
                 careerDto.Tags
             );
-
-            // Atualiza lista e duração
             existingCareer.AddItems(careerItems);
             existingCareer.SetDuration(totalDuration);
 
-            // Persiste a alteração no Mongo
             return await _repository.UpdateCareerAsync(existingCareer);
         }
 
-        // --- Método Auxiliar Privado para Mapear Entidade -> DTO ---
         private CareerResponseDTO MapToResponse(Career entity)
         {
             return new CareerResponseDTO
