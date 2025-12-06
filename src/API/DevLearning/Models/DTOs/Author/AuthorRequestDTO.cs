@@ -13,7 +13,7 @@ namespace DevLearning.Models.DTOs.Author
         [Required]
         public string Bio { get; set; }
 
-        public string Url { get; set; }
+        public string? Url { get; set; } // Adicionado nullable
         [Required]
         public string Email { get; set; }
         [Required]
