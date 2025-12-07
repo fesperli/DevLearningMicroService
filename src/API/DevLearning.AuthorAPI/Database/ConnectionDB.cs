@@ -1,11 +1,11 @@
 ﻿using Microsoft.Data.SqlClient;
 
-namespace DevLearning.CourseAPI.Database
+namespace DevLearning.AuthorAPI.Database
 {
-    public class DbConnectionFactory
+    public class ConnectionDB
     {
         private readonly string _connectionString;
-        public DbConnectionFactory(IConfiguration configuration)
+        public ConnectionDB(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("SqlServer")!;
         }
@@ -13,6 +13,5 @@ namespace DevLearning.CourseAPI.Database
         {
             return new SqlConnection(_connectionString);
         }
-
     }
 }
