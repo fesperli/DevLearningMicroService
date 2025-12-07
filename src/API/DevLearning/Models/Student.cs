@@ -1,4 +1,4 @@
-﻿using Blog.DevLearning.Models;
+﻿using DevLearning.Models.DTOs.Student;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -15,7 +15,7 @@ namespace DevLearning.Models
         public string? Phone { get; private set; }
         public DateOnly Birthdate { get; private set; }
         public DateTime CreateDate { get; private set; }
-        public List<Course> Courses { get; private set; } = new();
+        public List<CourseOfStudentDTO> Courses { get; private set; } = new();
 
         public Student(
             string name,

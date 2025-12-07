@@ -9,11 +9,11 @@ namespace DevLearning.StudentAPI.Repositories.Interface
         public Task CreateStudentAsync(Student student);
         public Task<List<StudentGetAllResponseDTO>> GetAllStudentsAsync();
         public Task<StudentGetByIdResponseDTO?> GetStudentByIdAsync(Guid id);
-        //public Task<StudentWithCoursesResponseDTO?> GetStudentCoursesAsync(Guid studentId);
+        public Task<StudentWithCoursesResponseDTO?> GetStudentCoursesAsync(Guid studentId);
         public Task<StudentUpdateDTO?> SearchStudentToUpdateAsync(Guid id);
         public Task UpdateStudentAsync(Guid id, StudentUpdateDTO student);
         public Task DeleteStudentAsync(Guid id);
-        //public Task<bool> VerifyExistCourseAsync(Guid courseId);
+        public Task<bool> VerifyExistCourseAsync(Guid courseId);
         public Task<bool> VerifyExistStudentAsync(Guid studentId);
         public Task EnrollingStudentInCourseAsync(StudentCourse studentCourse);
         public Task<byte> VerifyProgressToStudentInCourseAsync(Guid studentId, Guid courseId);

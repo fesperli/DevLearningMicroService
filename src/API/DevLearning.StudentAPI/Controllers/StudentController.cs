@@ -153,27 +153,27 @@ namespace DevLearning.StudentAPI.Controllers
             }
         }
 
-        //[HttpGet("{id}/Courses")]
-        //public async Task<ActionResult<StudentWithCoursesResponseDTO>> GetStudentCoursesAsync(Guid id)
-        //{
-        //    try
-        //    {
-        //        var studentWithCourses = await _studentService.GetStudentCoursesAsync(id);
-        //        if (studentWithCourses is null)
-        //            return NotFound("Estudante não encontrado");
+        [HttpGet("{id}/Courses")]
+        public async Task<ActionResult<StudentWithCoursesResponseDTO>> GetStudentCoursesAsync(Guid id)
+        {
+            try
+            {
+                var studentWithCourses = await _studentService.GetStudentCoursesAsync(id);
+                if (studentWithCourses is null)
+                    return NotFound("Estudante não encontrado");
 
-        //        if (studentWithCourses.Courses.Count() == 0)
-        //            return NotFound("Esse estudante não está cadastrado em cursos!");
+                if (studentWithCourses.Courses.Count() == 0)
+                    return NotFound("Esse estudante não está cadastrado em cursos!");
 
-        //        _logger.LogInformation("Buscando estudante e curso...");
-        //        return Ok(studentWithCourses);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "Erro inesperado ao listar cursos de um estudante!");
-        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-        //    }
-        //}
+                _logger.LogInformation("Buscando estudante e curso...");
+                return Ok(studentWithCourses);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro inesperado ao listar cursos de um estudante!");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<StudentGetByIdResponseDTO>> GetStudentByIdAsync(Guid id)

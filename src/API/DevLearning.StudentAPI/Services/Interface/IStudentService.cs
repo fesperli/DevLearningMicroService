@@ -8,7 +8,7 @@ namespace DevLearning.StudentAPI.Services.Interface
         public Task CreateStudentAsync(StudentRequestDTO dto);
         public Task<List<StudentGetAllResponseDTO>> GetAllStudentsAsync();
         public Task<StudentGetByIdResponseDTO?> GetStudentByIdAsync(Guid id);
-        //public Task<StudentWithCoursesResponseDTO?> GetStudentCoursesAsync(Guid studentId);
+        public Task<StudentWithCoursesResponseDTO?> GetStudentCoursesAsync(Guid studentId);
         public Task UpdateStudentAsync(Guid id, StudentUpdateDTO student);
         public Task DeleteStudentAsync(Guid id);
         public Task EnrollingStudentInCourseAsync(Guid studentId, Guid courseId, StudentCourseRequestDTO dto);

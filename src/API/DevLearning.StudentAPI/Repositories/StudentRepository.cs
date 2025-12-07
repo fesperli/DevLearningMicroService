@@ -1,11 +1,15 @@
-﻿using DevLearning.Models;
+﻿using Blog.DevLearning.Models;
+using DevLearning.Models;
+using DevLearning.Models.DTOs.Course;
 using DevLearning.Models.DTOs.Student;
 using DevLearning.Models.DTOs.StudentCourse;
 using DevLearning.StudentAPI.Data;
 using DevLearning.StudentAPI.Repositories.Interface;
+using Microsoft.AspNetCore.Http;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using System.Net;
 
 
 namespace DevLearning.StudentAPI.Repositories
@@ -15,14 +19,14 @@ namespace DevLearning.StudentAPI.Repositories
         private readonly MongoDBConnection _mongoConnection;
         private readonly IMongoCollection<Student> _studentsCollection;
         private readonly IMongoCollection<StudentCourse> _studentCourseCollection;
-        private readonly ILogger<StudentRepository> _logger;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public StudentRepository(MongoDBConnection connection, ILogger<StudentRepository> logger)
+        public StudentRepository(MongoDBConnection connection, IHttpClientFactory httpClientFectory)
         {
             _mongoConnection = connection;
             _studentsCollection = _mongoConnection.GetStudentMongoCollection();
             _studentCourseCollection = _mongoConnection.GetStudentCourseMongoCollection();
-            _logger = logger;
+            _httpClientFactory = httpClientFectory;
         }
 
         public async Task CreateStudentAsync(Student student)
@@ -30,9 +34,9 @@ namespace DevLearning.StudentAPI.Repositories
             await _studentsCollection.InsertOneAsync(student);                  
         }
 
-        //TODO: DELETE DO STUDENTCOURSE
         public async Task DeleteStudentAsync(Guid id)
         {
+            await _studentCourseCollection.DeleteManyAsync(s => s.StudentId == id);
             await _studentsCollection.DeleteOneAsync(s => s.Id == id);
         }
 
@@ -74,47 +78,55 @@ namespace DevLearning.StudentAPI.Repositories
             return studentResponse;
         }
 
-        //public async Task<StudentWithCoursesResponseDTO?> GetStudentCoursesAsync(Guid studentId)
-        //{
-        //    var sql = @"SELECT 
-        //                    s.Id AS StudentId, s.[Name], s.Email,
-        //                    c.Id AS CourseId, c.Title AS CourseTitle, c.Summary, c.[Url], c.[Level], c.DurationInMinutes,
-        //                    ca.Title AS CategoryTitle,
-        //                    sc.Progress, sc.Favorite, sc.StartDate, sc.LastUpdateDate
-        //                FROM Student s
-        //                LEFT JOIN StudentCourse sc
-        //                ON s.Id = sc.StudentId
-        //                LEFT JOIN Course c
-        //                ON sc.CourseId = c.Id
-        //                LEFT JOIN Category ca
-        //                ON c.CategoryId = ca.Id
-        //                WHERE s.Id = @Id
-        //                ORDER BY 
-        //                    sc.Favorite DESC,
-        //                    sc.StartDate";
+        public async Task<StudentWithCoursesResponseDTO?> GetStudentCoursesAsync(Guid studentId)
+        {
+            var student = (await _studentsCollection.FindAsync(s => s.Id == studentId)).FirstOrDefault();
 
-        //    var lookup = new Dictionary<Guid, StudentWithCoursesResponseDTO>();
-        //    await _connection.QueryAsync<StudentWithCoursesResponseDTO, CourseOfStudentDTO, StudentWithCoursesResponseDTO>(sql,
-        //        (student, course) =>
-        //        {
-        //            if (!lookup.TryGetValue(student.StudentId, out var dto))
-        //            {
-        //                dto = student;
-        //                lookup.Add(student.StudentId, dto);
-        //            }
+            if (student is null)
+                return null;
 
-        //            if (course is not null)
-        //                dto.Courses.Add(course);
+            var studentCourses = ( await _studentCourseCollection.FindAsync(sc => sc.StudentId == studentId)).ToList();
 
-        //            return student;
-        //        },
-        //        new { Id = studentId },
-        //        splitOn: "CourseId"
-        //    );
+            var client = _httpClientFactory.CreateClient("courseClient");
 
-        //    var student = lookup.Values.FirstOrDefault();
-        //    return student;
-        //}
+            var newStudentWithCourses = new StudentWithCoursesResponseDTO
+            {
+                StudentId = student.Id,
+                Name = student.Name,
+                Email = student.Email
+            };
+
+            foreach (var sc in studentCourses) 
+            { 
+                var response = await client.GetAsync(sc.CourseId.ToString());
+
+                if (!response.IsSuccessStatusCode)
+                    continue;
+
+                var courseData = await response.Content
+                    .ReadFromJsonAsync<CourseResponseDTO>();
+
+                if (courseData is null)
+                    continue;
+
+                newStudentWithCourses.Courses.Add(new CourseOfStudentDTO
+                {
+                    CourseId = sc.CourseId,
+                    CourseTitle = courseData.Title,
+                    Summary = courseData.Summary,
+                    Url = courseData.Url,
+                    Level = (byte)courseData.Level,
+                    DurationInMinutes = courseData.DurationInMinutes,
+                    Progress = sc.Progress,
+                    Favorite = sc.Favorite,
+                    StartDate = sc.StartDate,
+                    LastUpdateDate = sc.LastUpdateDate
+                });
+            }
+
+            return newStudentWithCourses;
+
+        }
 
         public async Task<int> SearchStudentByDocument(string document)
         {
@@ -168,14 +180,17 @@ namespace DevLearning.StudentAPI.Repositories
             await _studentsCollection.UpdateOneAsync(filter, update);
         }
 
-        //public async Task<bool> VerifyExistCourseAsync(Guid courseId)
-        //{
+        public async Task<bool> VerifyExistCourseAsync(Guid courseId)
+        {
+            var client =  _httpClientFactory.CreateClient("courseClient");
+            var response = await client.GetAsync(courseId.ToString());
 
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return false;
 
-        //    var sql = @"SELECT CASE WHEN EXISTS (SELECT 1 FROM Course WHERE Id = @Id) THEN 1 ELSE 0 END";
-        //    var exist = (await _connection.QueryFirstOrDefaultAsync<bool>(sql, new { Id = courseId }));
-        //    return exist;
-        //}
+            response.EnsureSuccessStatusCode();
+            return true;
+        }
 
         public async Task<bool> VerifyExistStudentAsync(Guid studentId)
         {
