@@ -44,8 +44,8 @@ namespace DevLearning.StudentAPI.Services
             if (!await _studentRepository.VerifyExistStudentAsync(studentId))
                 throw new ArgumentException("Esse estudante não existe!");
 
-            if (!await _studentRepository.VerifyExistCourseAsync(courseId))
-                throw new ArgumentException("Esse curso não existe!");
+            //if (!await _studentRepository.VerifyExistCourseAsync(courseId))
+            //    throw new ArgumentException("Esse curso não existe!");
 
             if (await _studentRepository.VerifyStudentEnrollingInCourseAsync(studentId, courseId))
                 throw new ArgumentException("O Estudante já está cadastrado nesse curso!");
@@ -75,12 +75,12 @@ namespace DevLearning.StudentAPI.Services
             return student;
         }
 
-        public async Task<StudentWithCoursesResponseDTO?> GetStudentCoursesAsync(Guid studentId)
-        {
-            var student = await _studentRepository.GetStudentCoursesAsync(studentId);
+        //public async Task<StudentWithCoursesResponseDTO?> GetStudentCoursesAsync(Guid studentId)
+        //{
+        //    var student = await _studentRepository.GetStudentCoursesAsync(studentId);
             
-            return student;
-        }
+        //    return student;
+        //}
 
         public async Task UpdateProgressStudentCourseAsync(Guid studentId, Guid courseId, StudentUpdateProgressDTO updateProgressDTO)
         {
@@ -90,8 +90,8 @@ namespace DevLearning.StudentAPI.Services
             if (!await _studentRepository.VerifyExistStudentAsync(studentId))
                 throw new ArgumentException("Esse estudante não existe!");
 
-            if (!await _studentRepository.VerifyExistCourseAsync(courseId))
-                throw new ArgumentException("Esse curso não existe!");
+            //if (!await _studentRepository.VerifyExistCourseAsync(courseId))
+            //    throw new ArgumentException("Esse curso não existe!");
 
             if (!await _studentRepository.VerifyStudentEnrollingInCourseAsync(studentId, courseId))
                 throw new ArgumentException("Este Estudante não está matriculado em nenhum curso!");

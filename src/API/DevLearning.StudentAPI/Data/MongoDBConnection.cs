@@ -13,8 +13,8 @@ namespace DevLearning.StudentAPI.Data
         {
             MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionURI);
             IMongoDatabase database = client.GetDatabase(mongoDBSettings.Value.DatabaseName);
-            _studentCollection = database.GetCollection<Student>(mongoDBSettings.Value.CollectionName);
-            _studentCourseCollection = database.GetCollection<StudentCourse>(mongoDBSettings.Value.CollectionName);
+            _studentCollection = database.GetCollection<Student>(mongoDBSettings.Value.StudentCollectionName);
+            _studentCourseCollection = database.GetCollection<StudentCourse>(mongoDBSettings.Value.StudentCourseCollectionName);
         }
 
         public IMongoCollection<Student> GetStudentMongoCollection() 

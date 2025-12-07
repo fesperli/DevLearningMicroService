@@ -7,7 +7,7 @@ namespace DevLearning.Models
     public class Student
     {
         [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonRepresentation(BsonType.String)]
         public Guid Id { get; private set; }
         public string Name { get; private set; }
         public string Email { get; private set; }

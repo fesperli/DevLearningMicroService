@@ -5,6 +5,7 @@ using DevLearning.StudentAPI.Data;
 using DevLearning.StudentAPI.Repositories.Interface;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
 
 namespace DevLearning.StudentAPI.Repositories
@@ -29,9 +30,10 @@ namespace DevLearning.StudentAPI.Repositories
             await _studentsCollection.InsertOneAsync(student);                  
         }
 
+        //TODO: DELETE DO STUDENTCOURSE
         public async Task DeleteStudentAsync(Guid id)
         {
-            await _studentsCollection.DeleteOneAsync(id.ToString());
+            await _studentsCollection.DeleteOneAsync(s => s.Id == id);
         }
 
         public async Task EnrollingStudentInCourseAsync(StudentCourse studentCourse)
@@ -39,7 +41,6 @@ namespace DevLearning.StudentAPI.Repositories
            await _studentCourseCollection.InsertOneAsync(studentCourse);
         }
 
-        //TODO: Foi usado o OrderBy por CreateDate
         public async Task<List<StudentGetAllResponseDTO>> GetAllStudentsAsync()
         {
             var students = (await _studentsCollection.FindAsync(s => true)).ToList();
@@ -73,54 +74,58 @@ namespace DevLearning.StudentAPI.Repositories
             return studentResponse;
         }
 
-        public async Task<StudentWithCoursesResponseDTO?> GetStudentCoursesAsync(Guid studentId)
-        {
-            var sql = @"SELECT 
-                            s.Id AS StudentId, s.[Name], s.Email,
-                            c.Id AS CourseId, c.Title AS CourseTitle, c.Summary, c.[Url], c.[Level], c.DurationInMinutes,
-                            ca.Title AS CategoryTitle,
-                            sc.Progress, sc.Favorite, sc.StartDate, sc.LastUpdateDate
-                        FROM Student s
-                        LEFT JOIN StudentCourse sc
-                        ON s.Id = sc.StudentId
-                        LEFT JOIN Course c
-                        ON sc.CourseId = c.Id
-                        LEFT JOIN Category ca
-                        ON c.CategoryId = ca.Id
-                        WHERE s.Id = @Id
-                        ORDER BY 
-                            sc.Favorite DESC,
-                            sc.StartDate";
+        //public async Task<StudentWithCoursesResponseDTO?> GetStudentCoursesAsync(Guid studentId)
+        //{
+        //    var sql = @"SELECT 
+        //                    s.Id AS StudentId, s.[Name], s.Email,
+        //                    c.Id AS CourseId, c.Title AS CourseTitle, c.Summary, c.[Url], c.[Level], c.DurationInMinutes,
+        //                    ca.Title AS CategoryTitle,
+        //                    sc.Progress, sc.Favorite, sc.StartDate, sc.LastUpdateDate
+        //                FROM Student s
+        //                LEFT JOIN StudentCourse sc
+        //                ON s.Id = sc.StudentId
+        //                LEFT JOIN Course c
+        //                ON sc.CourseId = c.Id
+        //                LEFT JOIN Category ca
+        //                ON c.CategoryId = ca.Id
+        //                WHERE s.Id = @Id
+        //                ORDER BY 
+        //                    sc.Favorite DESC,
+        //                    sc.StartDate";
 
-            var lookup = new Dictionary<Guid, StudentWithCoursesResponseDTO>();
-            await _connection.QueryAsync<StudentWithCoursesResponseDTO, CourseOfStudentDTO, StudentWithCoursesResponseDTO>(sql,
-                (student, course) =>
-                {
-                    if (!lookup.TryGetValue(student.StudentId, out var dto))
-                    {
-                        dto = student;
-                        lookup.Add(student.StudentId, dto);
-                    }
+        //    var lookup = new Dictionary<Guid, StudentWithCoursesResponseDTO>();
+        //    await _connection.QueryAsync<StudentWithCoursesResponseDTO, CourseOfStudentDTO, StudentWithCoursesResponseDTO>(sql,
+        //        (student, course) =>
+        //        {
+        //            if (!lookup.TryGetValue(student.StudentId, out var dto))
+        //            {
+        //                dto = student;
+        //                lookup.Add(student.StudentId, dto);
+        //            }
 
-                    if (course is not null)
-                        dto.Courses.Add(course);
+        //            if (course is not null)
+        //                dto.Courses.Add(course);
 
-                    return student;
-                },
-                new { Id = studentId },
-                splitOn: "CourseId"
-            );
+        //            return student;
+        //        },
+        //        new { Id = studentId },
+        //        splitOn: "CourseId"
+        //    );
 
-            var student = lookup.Values.FirstOrDefault();
-            return student;
-        }
+        //    var student = lookup.Values.FirstOrDefault();
+        //    return student;
+        //}
 
         public async Task<int> SearchStudentByDocument(string document)
         {
             var student = (await _studentsCollection.FindAsync(d => d.Document == document)).FirstOrDefault();
-            var findDocument = int.Parse(student.Document);
 
-            return findDocument;
+            int documentExist = 0;
+
+            if (student != null)
+                documentExist = 1;
+
+            return documentExist;
         }
 
         public async Task<StudentUpdateDTO?> SearchStudentToUpdateAsync(Guid id)
@@ -139,73 +144,63 @@ namespace DevLearning.StudentAPI.Repositories
 
         public async Task UpdateProgressStudentCourseAsync(Guid studentId, Guid courseId, StudentUpdateProgressDTO updateProgressDTO)
         {
-            var sql = @"UPDATE StudentCourse SET
-                            Progress = @Progress,
-                            LastUpdateDate = @LastUpdateDate
-                        WHERE StudentId = @StudentId AND CourseId = @CourseId";
+            var filter = Builders<StudentCourse>.Filter.Eq(s => s.StudentId, studentId) &
+                Builders<StudentCourse>.Filter.Eq(c => c.CourseId, courseId);
 
-            await _connection.ExecuteAsync(sql, new
-            {
-                Progress = updateProgressDTO.Progress,
-                LastUpdateDate = updateProgressDTO.LastUpdateDate,
-                StudentId = studentId,
-                CourseId = courseId
-            });
+            var update = Builders<StudentCourse>.Update
+                .Set(p => p.Progress, updateProgressDTO.Progress)
+                .Set(d => d.LastUpdateDate, updateProgressDTO.LastUpdateDate);
+
+            await _studentCourseCollection.UpdateOneAsync(filter, update);
         }
 
         public async Task UpdateStudentAsync(Guid id, StudentUpdateDTO student)
         {
-            var sql = @"UPDATE Student SET
-                            Name = @Name,
-                            Email = @Email,
-                            Phone = @Phone
-                        WHERE Id = @Id";
 
-            await _connection.ExecuteAsync(sql, new
-            {
-                Name = student.Name,
-                Email = student.Email,
-                Phone = student.Phone,
-                Id = id
-            });
+            var filter = Builders<Student>.Filter.Eq(i => i.Id, id);
+
+            var update = Builders<Student>.Update
+                .Set(n => n.Name, student.Name)
+                .Set(n => n.Email, student.Email)
+                .Set(n => n.Phone, student.Phone);
+
+
+            await _studentsCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task<bool> VerifyExistCourseAsync(Guid courseId)
-        {
-            var sql = @"SELECT CASE WHEN EXISTS (SELECT 1 FROM Course WHERE Id = @Id) THEN 1 ELSE 0 END";
-            var exist = await _connection.QueryFirstOrDefaultAsync<bool>(sql, new { Id = courseId });
-            return exist;
-        }
+        //public async Task<bool> VerifyExistCourseAsync(Guid courseId)
+        //{
+
+
+        //    var sql = @"SELECT CASE WHEN EXISTS (SELECT 1 FROM Course WHERE Id = @Id) THEN 1 ELSE 0 END";
+        //    var exist = (await _connection.QueryFirstOrDefaultAsync<bool>(sql, new { Id = courseId }));
+        //    return exist;
+        //}
 
         public async Task<bool> VerifyExistStudentAsync(Guid studentId)
         {
-            var sql = @"SELECT CASE WHEN EXISTS (SELECT 1 FROM Student WHERE Id = @Id) THEN 1 ELSE 0 END";
-            var exist = await _connection.QueryFirstOrDefaultAsync<bool>(sql, new { Id = studentId });
+            var exist = await _studentsCollection.AsQueryable().AnyAsync(i => i.Id == studentId);
+
             return exist;
+
         }
 
         public async Task<byte> VerifyProgressToStudentInCourseAsync(Guid studentId, Guid courseId)
         {
-            var sql = "SELECT Progress FROM StudentCourse WHERE StudentId = @StudentId AND CourseId = @CourseId";
 
-            return await _connection.QueryFirstOrDefaultAsync<byte>(sql, new
-            {
-                StudentId = studentId,
-                CourseId = courseId
-            });
+            var studentCourse = (await _studentCourseCollection.FindAsync(i => i.StudentId == studentId && i.CourseId == courseId)).FirstOrDefault();
+
+            var progress = studentCourse.Progress;
+
+            return progress;
         }
 
         public async Task<bool> VerifyStudentEnrollingInCourseAsync(Guid studentId, Guid courseId)
         {
-            var sql = @"SELECT CASE WHEN EXISTS 
-                            (SELECT 1 FROM StudentCourse WHERE StudentId = @StudentId AND CourseId = @CourseId)
-                        THEN 1 ELSE 0 END";
 
-            return await _connection.QueryFirstOrDefaultAsync<bool>(sql, new
-            {
-                StudentId = studentId,
-                CourseId = courseId
-            });
+            var exist = await _studentCourseCollection.AsQueryable().AnyAsync(i => i.StudentId == studentId && i.CourseId == courseId);
+
+            return exist;
         }
     }
 }
