@@ -1,6 +1,7 @@
 ﻿using DevLearning.Models.DTOs.Student;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+﻿using DevLearning.Models;
 
 namespace DevLearning.Models
 {
