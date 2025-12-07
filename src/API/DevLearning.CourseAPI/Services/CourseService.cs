@@ -2,6 +2,7 @@
 using DevLearning.CourseAPI.Services.Interfaces;
 using DevLearning.Models;
 using DevLearning.Models.DTOs.Course;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace DevLearning.CourseAPI.Services
 {
@@ -9,9 +10,12 @@ namespace DevLearning.CourseAPI.Services
     {
         private readonly CourseRepository _courseRepository;
 
-        public CourseService(CourseRepository courseRepository)
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        public CourseService(CourseRepository courseRepository, IHttpClientFactory httpClientFactory)
         {
             _courseRepository = courseRepository;
+            _httpClientFactory = httpClientFactory;
         }
 
         public Task<List<CourseResponseDTO>> GetAllCoursesAsync()
@@ -22,6 +26,20 @@ namespace DevLearning.CourseAPI.Services
 
         public async Task CreateCourseAsync(CourseRequestDTO dto)
         {
+            var client = _httpClientFactory.CreateClient("Author");
+
+            var response = await client.GetAsync(dto.AuthorId.ToString());
+
+            response.EnsureSuccessStatusCode();
+
+
+            client = _httpClientFactory.CreateClient("Category");
+
+            response = await client.GetAsync(dto.CategoryId.ToString());
+
+            response.EnsureSuccessStatusCode();
+
+
             var course = new Course(
                 tag: dto.Tag,
                 title: dto.Title,
@@ -44,6 +62,19 @@ namespace DevLearning.CourseAPI.Services
 
         public async Task<bool> UpdateCourseAsync(Guid id, CourseRequestDTO dto)
         {
+            var client = _httpClientFactory.CreateClient("Author");
+
+            var response = await client.GetAsync(dto.AuthorId.ToString());
+
+            response.EnsureSuccessStatusCode();
+
+
+            client = _httpClientFactory.CreateClient("Category");
+
+            response = await client.GetAsync(dto.CategoryId.ToString());
+
+            response.EnsureSuccessStatusCode();
+
             var course = new Course(
                 tag: dto.Tag,
                 title: dto.Title,

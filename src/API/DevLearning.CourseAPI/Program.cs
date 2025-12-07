@@ -13,6 +13,12 @@ builder.Services.AddSingleton<DbConnectionFactory>();
 builder.Services.AddSingleton<CourseRepository>();
 builder.Services.AddSingleton<CourseService>();
 
+builder.Services.AddHttpClient("Author", client =>
+    client.BaseAddress = new Uri("https://localhost:6001/author/"));
+
+builder.Services.AddHttpClient("Category", client =>
+    client.BaseAddress = new Uri("https://localhost:5001/category/"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

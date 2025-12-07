@@ -80,6 +80,11 @@ namespace DevLearning.CourseAPI.Controllers
                 _logger.LogWarning(ex, "Erro de entrada ao criar curso");
                 return BadRequest(new { error = ex.Message }); // 400
             }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogWarning(ex, "Erro de entrada nos ids ao criar curso");
+                return BadRequest(new {error = ex.Message }); // 400
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erro inesperado ao criar curso");
@@ -105,6 +110,11 @@ namespace DevLearning.CourseAPI.Controllers
             catch (ArgumentException ex)
             {
                 _logger.LogWarning(ex, "Erro de entrada ao atualizar curso");
+                return BadRequest(new { error = ex.Message }); // 400
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogWarning(ex, "Erro de entrada nos ids ao criar curso");
                 return BadRequest(new { error = ex.Message }); // 400
             }
             catch (Exception ex)
