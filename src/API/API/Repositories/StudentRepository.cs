@@ -45,21 +45,21 @@ namespace API.Repositories
             await _connection.ExecuteAsync(sql, new { Id = id });
         }
 
-        public async Task EnrollingStudentInCourseAsync(StudentCourse studentCourse)
-        {
-            var sql = @"INSERT INTO StudentCourse (CourseId, StudentId, Progress, Favorite, StartDate, LastUpdateDate)
-                        VALUES (@CourseId, @StudentId, @Progress, @Favorite, @StartDate, @LastUpdateDate)";
+        //public async Task EnrollingStudentInCourseAsync(StudentCourse studentCourse)
+        //{
+        //    var sql = @"INSERT INTO StudentCourse (CourseId, StudentId, Progress, Favorite, StartDate, LastUpdateDate)
+        //                VALUES (@CourseId, @StudentId, @Progress, @Favorite, @StartDate, @LastUpdateDate)";
 
-            await _connection.ExecuteAsync(sql, new
-            {
-                CourseId = studentCourse.CourseId,
-                StudentId = studentCourse.StudentId,
-                Progress = studentCourse.Progress,
-                Favorite = studentCourse.Favorite,
-                StartDate = studentCourse.StartDate,
-                LastUpdateDate = studentCourse.LastUpdateDate
-            });
-        }
+        //    await _connection.ExecuteAsync(sql, new
+        //    {
+        //        CourseId = studentCourse.CourseId,
+        //        StudentId = studentCourse.StudentId,
+        //        Progress = studentCourse.Progress,
+        //        Favorite = studentCourse.Favorite,
+        //        StartDate = studentCourse.StartDate,
+        //        LastUpdateDate = studentCourse.LastUpdateDate
+        //    });
+        //}
 
         public async Task<List<StudentGetAllResponseDTO>> GetAllStudentsAsync()
         {

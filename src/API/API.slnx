@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="API/API.csproj" />
+  <Project Path="DevLearning.CategoryAPI/DevLearning.CategoryAPI.csproj" Id="816d335a-3253-4dce-95fb-bdfb0d421c5d" />
   <Project Path="DevLearning/DevLearning.csproj" Id="87ab0bb5-3b46-42a4-aeaa-a98cd9ccbb3c" />
 </Solution>
