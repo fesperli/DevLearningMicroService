@@ -103,10 +103,7 @@ namespace DevLearning.StudentAPI.Controllers
         }
 
         [HttpPost("{studentId}/Course/{courseId}")]
-        public async Task<ActionResult> EnrollingStudentInCourseAsync
-        (
-            Guid studentId, Guid courseId, StudentCourseRequestDTO dto
-        )
+        public async Task<ActionResult> EnrollingStudentInCourseAsync( Guid studentId, Guid courseId, StudentCourseRequestDTO dto)
         {
             try
             {

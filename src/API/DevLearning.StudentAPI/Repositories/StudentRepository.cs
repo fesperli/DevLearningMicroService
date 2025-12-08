@@ -33,7 +33,11 @@ namespace DevLearning.StudentAPI.Repositories
 
         public async Task DeleteStudentAsync(Guid id)
         {
-            await _studentCourseCollection.DeleteManyAsync(s => s.StudentId == id);
+            var filter = _studentCourseCollection.FindAsync(sc => sc.StudentId == id);
+            
+            if(filter != null)
+                await _studentCourseCollection.DeleteManyAsync(s => s.StudentId == id);
+
             await _studentsCollection.DeleteOneAsync(s => s.Id == id);
         }
 

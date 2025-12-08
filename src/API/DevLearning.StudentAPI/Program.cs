@@ -14,7 +14,7 @@ builder.Services.AddSingleton<MongoDBConnection>();
 builder.Services.AddSingleton<StudentRepository>();
 builder.Services.AddSingleton<StudentService>();
 
-builder.Services.AddHttpClient("courseClient", client => client.BaseAddress = new Uri("https://localhost:7001/api/Course"));
+builder.Services.AddHttpClient("courseClient", client => client.BaseAddress = new Uri("https://localhost:7001/api/Course/"));
 
 var app = builder.Build();
 
