@@ -15,7 +15,7 @@ namespace DevLearning.StudentAPI.Repositories.Interface
         public Task DeleteStudentAsync(Guid id);
         public Task<bool> VerifyExistCourseAsync(Guid courseId);
         public Task<bool> VerifyExistStudentAsync(Guid studentId);
-        public Task EnrollingStudentInCourseAsync(StudentCourse studentCourse);
+        //public Task EnrollingStudentInCourseAsync(StudentCourse studentCourse);
         public Task<byte> VerifyProgressToStudentInCourseAsync(Guid studentId, Guid courseId);
         public Task<bool> VerifyStudentEnrollingInCourseAsync(Guid studentId, Guid courseId);
         public Task UpdateProgressStudentCourseAsync(Guid studentId, Guid courseId, StudentUpdateProgressDTO updateProgressDTO);
