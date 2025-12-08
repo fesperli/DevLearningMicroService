@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="DevLearning.CareerAPI/DevLearning.CareerAPI.csproj" Id="e16bee1c-41c7-44a0-896c-a12a77bd9c15" />
    <Project Path="DevLearning.StudentAPI/DevLearning.StudentAPI.csproj" Id="37d0f880-f0a0-4630-84a1-ac13a04603a7" />
   <Project Path="DevLearning.AuthorAPI/DevLearning.AuthorAPI.csproj" Id="71543d0b-5db7-4c66-8436-ac4bd61c7ace" />
   <Project Path="DevLearning.CourseAPI/DevLearning.CourseAPI.csproj" Id="13bed1fc-4387-421d-96bd-9289f42ee860" />
