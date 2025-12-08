@@ -18,38 +18,39 @@
         public Guid CategoryId { get; private set; }
         public string Tags { get; private set; }
 
-    public Course(
-        string tag,
-        string title,
-        string summary,
-        string url,
-        int level,
-        int durationInMinutes,
-        DateTime createDate,
-        DateTime lastUpdateDate,
-        bool active,
-        bool free,
-        bool featured,
-        Guid authorId,
-        Guid categoryId,
-        string tags)
-    {
-        this.Id = Guid.NewGuid();
-        this.Tag = tag;
-        this.Title = title;
-        this.Summary = summary;
-        this.Url = url;
-        this.Level = level;
-        this.DurationInMinutes = durationInMinutes;
-        this.CreateDate = createDate;
-        this.LastUpdateDate = lastUpdateDate;
-        this.Active = active;
-        this.Free = free;
-        this.Featured = featured;
-        this.AuthorId = authorId;
-        this.CategoryId = categoryId;
-        this.CreateDate = DateTime.Now;
-        this.LastUpdateDate = DateTime.Now;
-        this.Tags = tags;
+        public Course(
+            string tag,
+            string title,
+            string summary,
+            string url,
+            int level,
+            int durationInMinutes,
+            DateTime createDate,
+            DateTime lastUpdateDate,
+            bool active,
+            bool free,
+            bool featured,
+            Guid authorId,
+            Guid categoryId,
+            string tags)
+        {
+            this.Id = Guid.NewGuid();
+            this.Tag = tag;
+            this.Title = title;
+            this.Summary = summary;
+            this.Url = url;
+            this.Level = level;
+            this.DurationInMinutes = durationInMinutes;
+            this.CreateDate = createDate;
+            this.LastUpdateDate = lastUpdateDate;
+            this.Active = active;
+            this.Free = free;
+            this.Featured = featured;
+            this.AuthorId = authorId;
+            this.CategoryId = categoryId;
+            this.CreateDate = DateTime.Now;
+            this.LastUpdateDate = DateTime.Now;
+            this.Tags = tags;
+        }
     }
 }

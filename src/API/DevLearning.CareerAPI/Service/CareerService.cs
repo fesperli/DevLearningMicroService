@@ -1,11 +1,8 @@
-﻿using DevLearning.Models;
-using DevLearning.Models.DTOs.Career;
-using DevLearning.Repositories;
-using DevLearning.Services;
-using DevLearning.CareerAPI.Repositories.Interfaces;
+﻿using DevLearning.CareerAPI.Repositories.Interfaces;
 using DevLearning.CareerAPI.Service.Interfaces;
 using DevLearning.Models;
 using DevLearning.Models.DTOs.Career;
+using DevLearning.Models.DTOs.Course;
 
 namespace DevLearning.Services
 {
@@ -13,9 +10,12 @@ namespace DevLearning.Services
     {
         private readonly ICareerRepository _repository;
 
-        public CareerService(ICareerRepository repository)
+        private readonly HttpClient _client;
+
+        public CareerService(ICareerRepository repository, HttpClient client)
         {
             _repository = repository;
+            _client = client;
         }
 
         public async Task<IEnumerable<CareerResponseDTO>> GetAllCareerAsync()
@@ -46,8 +46,13 @@ namespace DevLearning.Services
             {
                 foreach (var itemDto in careerDto.Items)
                 {
-                    int duracaoMock = 60;
-                    totalDuration += duracaoMock;
+                    var response = await _client.GetAsync(itemDto.CourseId.ToString());
+
+                    response.EnsureSuccessStatusCode();
+
+                    var course = await response.Content.ReadFromJsonAsync<CourseResponseDTO>();
+
+                    totalDuration += course.DurationInMinutes;
 
                     careerItems.Add(new CareerItem
                     {
@@ -55,7 +60,7 @@ namespace DevLearning.Services
                         Title = string.IsNullOrWhiteSpace(itemDto.Title) ? $"Curso {itemDto.CourseId}" : itemDto.Title,
                         Description = itemDto.Description,
                         Order = itemDto.Order,
-                        Duration = duracaoMock
+                        Duration = course.DurationInMinutes
                     });
                 }
             }
@@ -91,8 +96,13 @@ namespace DevLearning.Services
             {
                 foreach (var itemDto in careerDto.Items)
                 {
-                    int duracaoMock = 60;
-                    totalDuration += duracaoMock;
+                    var response = await _client.GetAsync(itemDto.CourseId.ToString());
+
+                    response.EnsureSuccessStatusCode();
+
+                    var course = await response.Content.ReadFromJsonAsync<CourseResponseDTO>();
+
+                    totalDuration += course.DurationInMinutes;
 
                     careerItems.Add(new CareerItem
                     {
@@ -100,7 +110,7 @@ namespace DevLearning.Services
                         Title = string.IsNullOrWhiteSpace(itemDto.Title) ? $"Curso {itemDto.CourseId}" : itemDto.Title,
                         Description = itemDto.Description,
                         Order = itemDto.Order,
-                        Duration = duracaoMock
+                        Duration = course.DurationInMinutes
                     });
                 }
             }

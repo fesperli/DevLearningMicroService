@@ -1,8 +1,5 @@
 using DevLearning.CareerAPI.Data;
-using DevLearning.CareerAPI.Repositories;
 using DevLearning.CareerAPI.Repositories.Interfaces;
-using DevLearning.CareerAPI.Service;
-using DevLearning.CareerAPI.Service;
 using DevLearning.CareerAPI.Service.Interfaces;
 using DevLearning.Repositories;
 using DevLearning.Services;
@@ -21,7 +18,9 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
     new MongoClient(builder.Configuration["MongoDBSettings:ConnectionURI"]));
 
 builder.Services.AddScoped<ICareerRepository, CareerRepository>();
-builder.Services.AddScoped<ICareerService, CareerService>();
+
+builder.Services.AddHttpClient<ICareerService, CareerService>(client =>
+    client.BaseAddress = new Uri("https://localhost:7001/api/course/"));
 
 // Add services to the container.
 
