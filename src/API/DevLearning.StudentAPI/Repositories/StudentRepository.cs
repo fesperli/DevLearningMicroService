@@ -1,12 +1,9 @@
-﻿using Blog.DevLearning.Models;
-using DevLearning.Models;
+﻿using DevLearning.Models;
 using DevLearning.Models.DTOs.Course;
 using DevLearning.Models.DTOs.Student;
 using DevLearning.Models.DTOs.StudentCourse;
 using DevLearning.StudentAPI.Data;
 using DevLearning.StudentAPI.Repositories.Interface;
-using Microsoft.AspNetCore.Http;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System.Net;
@@ -36,7 +33,11 @@ namespace DevLearning.StudentAPI.Repositories
 
         public async Task DeleteStudentAsync(Guid id)
         {
-            await _studentCourseCollection.DeleteManyAsync(s => s.StudentId == id);
+            var filter = _studentCourseCollection.FindAsync(sc => sc.StudentId == id);
+            
+            if(filter != null)
+                await _studentCourseCollection.DeleteManyAsync(s => s.StudentId == id);
+
             await _studentsCollection.DeleteOneAsync(s => s.Id == id);
         }
 
