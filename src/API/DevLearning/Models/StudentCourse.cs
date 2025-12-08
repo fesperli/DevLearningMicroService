@@ -1,13 +1,18 @@
-﻿namespace DevLearning.Models
+﻿using Blog.DevLearning.Models;
+
+namespace DevLearning.Models
 {
     public class StudentCourse
     {
+
         public Guid CourseId { get; private set; }
         public Guid StudentId { get; private set; }
         public byte Progress { get; private set; }
         public bool Favorite { get; private set; }
         public DateTime StartDate { get; private set; }
         public DateTime LastUpdateDate { get; private set; }
+
+        public List<Course> Courses = new();
 
         public StudentCourse(
             Guid courseId,
