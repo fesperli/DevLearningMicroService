@@ -1,12 +1,9 @@
-﻿using Blog.DevLearning.Models;
-using DevLearning.Models;
+﻿using DevLearning.Models;
 using DevLearning.Models.DTOs.Course;
 using DevLearning.Models.DTOs.Student;
 using DevLearning.Models.DTOs.StudentCourse;
 using DevLearning.StudentAPI.Data;
 using DevLearning.StudentAPI.Repositories.Interface;
-using Microsoft.AspNetCore.Http;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System.Net;

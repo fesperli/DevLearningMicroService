@@ -1,9 +1,6 @@
-﻿using DevLearning.Models.DTOs.Career;
-using DevLearning.CareerAPI.Service;
-using DevLearning.CareerAPI.Service.Interfaces;
+﻿using DevLearning.CareerAPI.Service.Interfaces;
 using DevLearning.Models.DTOs.Career;
 using Microsoft.AspNetCore.Mvc;
-using System.Numerics;
 
 namespace DevLearning.Controllers
 {
